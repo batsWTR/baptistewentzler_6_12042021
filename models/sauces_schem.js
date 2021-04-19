@@ -16,4 +16,4 @@ const obj = mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('sauces_schem', obj);
+module.exports = mongoose.model('sauce', obj);

@@ -4,10 +4,10 @@ const mongoose = require('mongoose');
 
 
 const obj = mongoose.Schema({
-    userId: String,
-    email: {type: String, unique: true},
-    password: String
+    userId: {type: String, required: true},
+    email: {type: String, required: true, unique: true},
+    password:{type: String, required:true }
 });
 
 
-module.exports = mongoose.model('user_schem',obj);
+module.exports = mongoose.model('user',obj);
