@@ -13,11 +13,7 @@ router.use(express.json());
 router.use(authCtrl.headers);
 router.post('/signup', authCtrl.signup);
 router.post('/login',authCtrl.login);
-router.use((err, req, res, next)=>{
-    console.log('ERREUR');
-
-    res.status(400).json({message: 'ERREUR ' + err});
-})
+router.use(authCtrl.error);
 
 
 

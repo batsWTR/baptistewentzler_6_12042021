@@ -67,3 +67,9 @@ exports.signup = (req, res, next)=>{
 
 }
 
+exports.error = (err,req,res,next)=>{
+    console.log('ERREUR');
+
+    res.status(400).json({message: 'ERREUR ' + err});
+}
+

@@ -2,6 +2,7 @@ const express = require('express');
 const parser = require('body-parser');
 const sauces_schem = require('../models/sauces_schem');
 const saucesCtrl = require('../controller/sauces');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ const router = express.Router();
 
 router.use(express.json());
 router.use(saucesCtrl.header);
-router.get('/', saucesCtrl.getSauces);
+router.get('/',auth, saucesCtrl.getSauces);
 router.get('/:id', saucesCtrl.getSauce);
 router.post('/', saucesCtrl.postSauce);
 router.put('/:id', saucesCtrl.putSauce);
