@@ -8,7 +8,6 @@ const router = express.Router();
 
 
 // parsage json
-
 router.use(express.json());
 router.use(saucesCtrl.header);
 router.get('/',auth, saucesCtrl.getSauces);

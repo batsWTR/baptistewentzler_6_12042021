@@ -6,7 +6,7 @@ const auth = require('./routes/auth');
 
 const app = express();
 
-
+app.use('/images',express.static('images'));
 app.use('/api/sauces', sauces);
 app.use('/api/auth', auth);
 
