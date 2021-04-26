@@ -4,29 +4,23 @@ const jwt = require('jsonwebtoken');
 DEBUG = true;
 
 module.exports = (req,res,next)=>{
+    DEBUG ? console.log('Authentification') : true;
 
     try{
-        // recuperation du token
+            // recuperation du token
         const token = req.headers.authorization.split(" ");
 
         DEBUG ? console.log('Token recu: ' + token[1]) :true;
-        
-        //verification token
-        jwt.verify(token[1], 'secret_key',(err,decoded)=>{
-            if(err){
-                DEBUG ? console.log('Erreur: ' + err) : true;
-                return res.status(400).json({msg: err});
-            }
+            
+            //verification token
+        const decoded = jwt.verify(token[1], 'secret_key');
+        DEBUG ? console.log('UserId token: ' + decoded.userId) : true;
+        DEBUG ? console.log('UserId: ' + req.body.userId) : true;
+        DEBUG ? console.log('Egalité: ' + decoded.userId == req.body.userId) : true;
 
-            DEBUG ? console.log('UserId: ' + decoded.userId) : true;
-            DEBUG ? console.log('Control Authentification ') : true ;
-            next();
-        });
+        next();
     }catch{
-        DEBUG ? console.log('ERREUR requete authentification') : true;
-        res.status(404).json({msg: 'mauvaise requete'});
+        DEBUG ? console.log('ERREUR authentification') : true;
+        res.status(400).json({msg: 'Erreur authentification'});
     }
-
-    
-    
 }

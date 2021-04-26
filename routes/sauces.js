@@ -13,7 +13,7 @@ router.use(express.json());
 router.use(saucesCtrl.header);
 router.get('/',auth, saucesCtrl.getSauces);
 router.get('/:id', saucesCtrl.getSauce);
-router.post('/',upload_file, saucesCtrl.postSauce);
+router.post('/',auth,  upload_file, saucesCtrl.postSauce);
 router.put('/:id', saucesCtrl.putSauce);
 router.delete('/:id', saucesCtrl.deleteSauce);
 router.post('/:id/like', saucesCtrl.postLike);
