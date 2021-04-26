@@ -1,5 +1,5 @@
-
-
+const mongoose = require('mongoose');
+const sauces_schem = require('../models/sauces_schem');
 
 
 
@@ -30,7 +30,11 @@ exports.getSauce = (req,res)=>{
 
 // ajoute une sauce {sauce: 'nom', image: 'url'} renvoie {message: 'chaine'}
 exports.postSauce = (req,res)=>{
-    console.log('POST ' + req.body.sauce);
+    console.log('POST ');
+    //const objet = JSON.parse(req.body);
+    //const sauce = new sauces_schem({...req.body});
+    console.log(req.body);
+    console.log(req.file);
 
     res.status(200).json(req.body);
 }
