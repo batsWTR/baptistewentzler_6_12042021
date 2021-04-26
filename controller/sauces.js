@@ -18,7 +18,12 @@ exports.header = (req,res,next)=>{
 // retourne la liste de ttes les sauces
 exports.getSauces = (req,res)=>{
     console.log('GET');
-    res.status(200).json({msg: 'GET'});
+    sauces_schem.find().then((sauce)=>{
+        console.log(sauce);
+        res.status(200).json(sauce);
+    })
+    .catch((err)=> {res.status(400).json({message: err})});
+    //res.status(200).json({msg: 'GET'});
 }
 
 // renvoie la sauce avec l'id
@@ -31,12 +36,24 @@ exports.getSauce = (req,res)=>{
 // ajoute une sauce {sauce: 'nom', image: 'url'} renvoie {message: 'chaine'}
 exports.postSauce = (req,res)=>{
     console.log('POST ');
-    //const objet = JSON.parse(req.body);
-    //const sauce = new sauces_schem({...req.body});
-    console.log(req.body);
+    const objet = JSON.parse(req.body.sauce);
+    const sauce = new sauces_schem({
+        ...objet,
+        likes: '0',
+        dislikes: '0',
+        userLiked: [],
+        userDisliked: [],
+        imageUrl: req.file.path
+
+    });
+    console.log(sauce);
     console.log(req.file);
 
-    res.status(200).json(req.body);
+    sauce.save()
+    .then(()=> {res.status(200).json({message: 'sauce ajouté'})})
+    .catch((err)=> {res.status(400).json({message: 'impossible d ajouter la sauce'})});
+
+    
 }
 
 // modifie la sauce avec l'id fournit body {sauce: 'nom', image: 'url'} renvoie {message: 'chaine'}
