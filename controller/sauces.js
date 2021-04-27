@@ -37,6 +37,8 @@ exports.getSauce = (req,res)=>{
 exports.postSauce = (req,res)=>{
     console.log('POST ');
     const objet = JSON.parse(req.body.sauce);
+
+
     const sauce = new sauces_schem({
         ...objet,
         likes: '0',

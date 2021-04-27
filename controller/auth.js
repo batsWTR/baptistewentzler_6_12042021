@@ -47,6 +47,10 @@ exports.login = (req, res, next)=>{
 exports.signup = (req, res, next)=>{
     console.log('signup');
 
+    if(req.body.password.length < 4){
+        return res.status(412).json({message: "Le mot de passe est trop court"});
+    }
+
     // cryptage mot de passe
     bcrypt.hash(req.body.password, 10, (err,hash)=>{
         if(err){
@@ -62,7 +66,7 @@ exports.signup = (req, res, next)=>{
 
         console.log(user.password);
         user.userId = user._id;
-        user.save().then(()=>{res.status(201).json({msg: 'creation utilisateur'})}).catch((err)=>{res.status(400).json({msg: err})});
+        user.save().then(()=>{res.status(201).json({msg: 'creation utilisateur'})}).catch((err)=>{res.status(400).json({message: err})});
     });
 
 }
