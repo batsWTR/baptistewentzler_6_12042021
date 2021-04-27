@@ -45,7 +45,7 @@ exports.postSauce = (req,res)=>{
         dislikes: '0',
         userLiked: [],
         userDisliked: [],
-        imageUrl: req.file.path
+        imageUrl: req.protocol + '://' + req.get("host") + '/' +  req.file.path
 
     });
     console.log(sauce);
