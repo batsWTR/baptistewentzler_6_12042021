@@ -11,11 +11,11 @@ const router = express.Router();
 router.use(express.json());
 router.use(saucesCtrl.header);
 router.get('/',auth, saucesCtrl.getSauces);
-router.get('/:id', saucesCtrl.getSauce);
+router.get('/:id',auth, saucesCtrl.getSauce);
 router.post('/',auth,  upload_file, saucesCtrl.postSauce);
-router.put('/:id', saucesCtrl.putSauce);
-router.delete('/:id', saucesCtrl.deleteSauce);
-router.post('/:id/like', saucesCtrl.postLike);
+router.put('/:id',auth, saucesCtrl.putSauce);
+router.delete('/:id',auth, saucesCtrl.deleteSauce);
+router.post('/:id/like',auth, saucesCtrl.postLike);
 router.use(saucesCtrl.error);
 
 module.exports = router;

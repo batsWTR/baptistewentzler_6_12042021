@@ -18,12 +18,12 @@ exports.header = (req,res,next)=>{
 // retourne la liste de ttes les sauces
 exports.getSauces = (req,res)=>{
     console.log('GET');
-    sauces_schem.find().then((sauce)=>{
+    sauces_schem.find().then(sauce=>{
         console.log(sauce);
         res.status(200).json(sauce);
     })
     .catch((err)=> {res.status(400).json({message: err})});
-    //res.status(200).json({msg: 'GET'});
+
 }
 
 // renvoie la sauce avec l'id

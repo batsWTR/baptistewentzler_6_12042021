@@ -66,7 +66,7 @@ exports.signup = (req, res, next)=>{
 
         console.log(user.password);
         user.userId = user._id;
-        user.save().then(()=>{res.status(201).json({msg: 'creation utilisateur'})}).catch((err)=>{res.status(400).json({message: err})});
+        user.save().then(()=>{res.status(201).json({msg: 'creation utilisateur'})}).catch((err)=>{res.status(402).json({err})});
     });
 
 }
