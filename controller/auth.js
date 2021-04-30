@@ -27,12 +27,12 @@ exports.login = (req, res, next)=>{
     // regarde si email existe dans la base
     userSchem.findOne({email: req.body.email}, (err,obj)=>{
         if(!obj){
-            return res.status(406).json({message: 'Email inconnu'});
+            return res.status(418).json({message: 'Email inconnu'});
         }
 
         bcrypt.compare(req.body.password, obj.password, (err,result)=>{
             if(!result){
-                return res.status(400).json({message: 'mot de passe non valide'});
+                return res.status(418).json({message: 'mot de passe non valide'});
             }
             res.status(200).json({userId: obj.userId, token: jwt.sign({userId: obj.userId}, 'secret_key', {expiresIn: '2h'})});
         });
@@ -48,7 +48,7 @@ exports.signup = (req, res, next)=>{
     console.log('signup');
 
     if(req.body.password.length < 4){
-        return res.status(412).json({message: "Le mot de passe est trop court"});
+        return res.status(418).json({message: "Le mot de passe est trop court"});
     }
 
     // cryptage mot de passe
@@ -66,7 +66,7 @@ exports.signup = (req, res, next)=>{
 
         console.log(user.password);
         user.userId = user._id;
-        user.save().then(()=>{res.status(201).json({msg: 'creation utilisateur'})}).catch((err)=>{res.status(402).json({err})});
+        user.save().then(()=>{res.status(201).json({message: 'creation utilisateur'})}).catch((err)=>{res.status(418).json({message: err})});
     });
 
 }
@@ -74,6 +74,6 @@ exports.signup = (req, res, next)=>{
 exports.error = (err,req,res,next)=>{
     console.log('ERREUR');
 
-    res.status(400).json({message: 'ERREUR ' + err});
+    res.status(418).json({message: 'ERREUR ' + err});
 }
 
