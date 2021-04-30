@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 
 
-mongoose.connect('mongodb+srv://bawee:openclassroom@cluster0.ufsw1.mongodb.net/projet6?retryWrites=true&w=majority',  {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://openclassroom:openclassroom@cluster0.ufsw1.mongodb.net/projet6?retryWrites=true&w=majority',  {useNewUrlParser: true, useUnifiedTopology: true});
 
 
 
