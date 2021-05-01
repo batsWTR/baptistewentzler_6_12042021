@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const fs = require('fs');
+
 const sauces_schem = require('../models/sauces_schem');
 
 
@@ -75,7 +77,22 @@ exports.putSauce = (req,res)=>{
 exports.deleteSauce = (req,res)=>{
     console.log('DELETE ' + req.params.id);
 
-    res.status(200).json({msg: 'DELETE'});
+    // trouve la sauce
+    sauces_schem.findById(req.params.id)
+    .then(sauce =>{
+        const url = './images' + sauce.imageUrl.split('images')[1];
+        // effacer la photo
+        fs.unlink(url, err =>{
+            if(err){
+                return res.status(418).json({message: err});
+            }
+            // effacer la sauce
+            sauces_schem.deleteOne({_id: req.params.id})
+            .then(() =>{
+                res.status(200).json({message : 'Sauce supprimée'});
+            }).catch(err => res.status(418).json({message: err}));
+        });
+    }).catch(err => res.status(418).json({message: err}));
 }
 
 
