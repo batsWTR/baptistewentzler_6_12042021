@@ -68,8 +68,32 @@ exports.postSauce = (req,res)=>{
 // modifie la sauce avec l'id fournit body {sauce: 'nom', image: 'url'} renvoie {message: 'chaine'}
 exports.putSauce = (req,res)=>{
     console.log('PUT ' + req.params.id);
+    let foo = {};
+    // verifie si un fichier arrive
+    if(req.file){
+        console.log('req.file ' + req.file.path);
+        console.log('req.body ' + req.body.sauce);
+        foo = {...JSON.parse(req.body.sauce), imageUrl: req.protocol + '://' + req.get("host") + '/' +  req.file.path };
+        // supprime l'ancien fichier
+        sauces_schem.findById(req.params.id).then(sauce =>{
+            const url = './images' + sauce.imageUrl.split('images')[1];
+            fs.unlink(url, err => console.log(err));
+        }).catch(err => console.log(err));
 
-    res.status(200).json({msg: 'PUT'});
+    }else{
+        
+        foo = {...req.body};
+        console.log(foo);
+    }
+
+
+    sauces_schem.updateOne({_id: req.params.id}, {...foo, _id: req.params.id})
+    .then(()=> {
+ 
+        res.status(200).json({message: 'Objet modifié'});
+    })
+    .catch(err => res.status(418).json({message: err}));
+
 }
 
 
@@ -149,5 +173,5 @@ exports.postLike = (req,res)=>{
 
 // gestion erreur
 exports.error = (err,req,res,next)=>{
-    res.status(400).json({message: err});
+    res.status(418).json({message: err});
 }
