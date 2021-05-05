@@ -8,7 +8,6 @@ const router = express.Router();
 
 
 
-router.use(express.json());
 
 router.use(authCtrl.headers);
 router.post('/signup', authCtrl.signup);
