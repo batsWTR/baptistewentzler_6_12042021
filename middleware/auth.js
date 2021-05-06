@@ -21,6 +21,6 @@ module.exports = (req,res,next)=>{
         next();
     }catch(err){
         DEBUG ? console.log('ERREUR authentification') : true;
-        res.status(400).json({message: err});
+        res.status(498).json({message: err});
     }
 }
