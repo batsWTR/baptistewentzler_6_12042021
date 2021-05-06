@@ -47,6 +47,14 @@ exports.login = (req, res, next)=>{
 exports.signup = (req, res, next)=>{
     console.log('signup');
 
+    // verifie la validite de l'email
+    const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if(!req.body.email.match(regex)){
+        return res.status(418).json({message: 'Email non valide'});
+    }
+
+    // verifie la longueur du mot de passe
     if(req.body.password.length < 4){
         return res.status(418).json({message: "Le mot de passe est trop court"});
     }

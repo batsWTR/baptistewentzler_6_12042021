@@ -19,8 +19,8 @@ module.exports = (req,res,next)=>{
         DEBUG ? console.log('Egalité: ' + decoded.userId == req.body.userId) : true;
 
         next();
-    }catch{
+    }catch(err){
         DEBUG ? console.log('ERREUR authentification') : true;
-        res.status(400).json({msg: 'Erreur authentification'});
+        res.status(400).json({message: err});
     }
 }
