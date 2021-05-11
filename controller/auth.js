@@ -27,12 +27,12 @@ exports.login = (req, res, next)=>{
     // regarde si email existe dans la base
     userSchem.findOne({email: req.body.email}, (err,obj)=>{
         if(!obj){
-            return res.status(418).json({message: 'Email inconnu'});
+            return res.status(401).json({message: 'Email inconnu'});
         }
 
         bcrypt.compare(req.body.password, obj.password, (err,result)=>{
             if(!result){
-                return res.status(418).json({message: 'mot de passe non valide'});
+                return res.status(401).json({message: 'mot de passe non valide'});
             }
             res.status(200).json({userId: obj.userId, token: jwt.sign({userId: obj.userId}, 'secret_key', {expiresIn: '2h'})});
         });
@@ -51,18 +51,18 @@ exports.signup = (req, res, next)=>{
     const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if(!req.body.email.match(regex)){
-        return res.status(418).json({message: 'Email non valide'});
+        return res.status(401).json({message: 'Email non valide'});
     }
 
     // verifie la longueur du mot de passe
-    if(req.body.password.length < 4){
-        return res.status(418).json({message: "Le mot de passe est trop court"});
+    if(req.body.password.length < 6 || req.body.password.length > 25){
+        return res.status(401).json({message: "Le mot de passe doit contenir de 6 à 25 caractères"});
     }
 
     // cryptage mot de passe
     bcrypt.hash(req.body.password, 10, (err,hash)=>{
         if(err){
-            return res.status(418).json({message: err});
+            return res.status(401).json({message: err});
         }
 
         // crée un nouvel utilisateur
@@ -74,7 +74,7 @@ exports.signup = (req, res, next)=>{
 
         console.log(user.password);
         user.userId = user._id;
-        user.save().then(()=>{res.status(201).json({message: 'creation utilisateur'})}).catch((err)=>{res.status(418).json({message: err})});
+        user.save().then(()=>{res.status(201).json({message: 'creation utilisateur'})}).catch((err)=>{res.status(401).json({message: err})});
     });
 
 }

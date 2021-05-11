@@ -6,7 +6,6 @@ const upload_file = require('../middleware/upload');
 const router = express.Router();
 
 
-// parsage json
 
 router.use(saucesCtrl.header);
 router.get('/',auth, saucesCtrl.getSauces);
