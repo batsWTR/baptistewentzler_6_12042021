@@ -3,10 +3,10 @@ const userSchem = require('../models/user_schem');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const env = require('dotenv').config();
 
 
-
-mongoose.connect('mongodb+srv://openclassroom:openclassroom@cluster0.ufsw1.mongodb.net/projet6?retryWrites=true&w=majority',  {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@cluster0.ufsw1.mongodb.net/' + process.env.DB_COLLECTION + '?retryWrites=true&w=majority',  {useNewUrlParser: true, useUnifiedTopology: true});
 
 
 
